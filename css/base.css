@@ -1,0 +1,104 @@
+/* G3 Summit 2.0. Retro ski-poster meets family reunion.
+   Shrikhand (display only, headlines) + Bricolage Grotesque (everything else, variable width).
+   Flat poster palette; poppy red is the one accent. Trail-sign shapes (circle / square / diamond)
+   are information, never decoration. Shared tokens + chrome live here; views style themselves. */
+:root {
+  --spruce: #123B2F;
+  --spruce-2: #1B4D3E;
+  --snow: #EEF3F6;
+  --white: #FFFFFF;
+  --poppy: #C8102E;
+  --orange: #F2731D;
+  --sky: #2F6DB5;
+  --ink: #14211C;
+  --muted: #4E5F58;
+  --line: #CBD6DC;
+  --slate: #17252B;     /* sportsbook board */
+  --slate-2: #213239;
+  --green-run: #1E9E4A;
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --nav-h: 60px;
+  --gut: clamp(16px, 4vw, 48px);
+  --max: 1200px;
+  /* type scale (major third) */
+  --t-sm: 14px; --t-base: 17px; --t-md: 21px; --t-lg: 27px; --t-xl: 42px; --t-2xl: 64px; --t-3xl: clamp(64px, 12vw, 168px);
+  /* spacing (8px) */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s6: 48px; --s8: 64px; --s12: 96px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--snow); color: var(--ink); font-family: var(--sans); font-size: var(--t-base); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.02; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 5000; background: var(--white); color: var(--ink); padding: 8px 16px; font-weight: 600; }
+.skip:focus { top: 12px; }
+.view:focus { outline: none; }
+
+/* trail-sign glyphs, usable anywhere: <i class="sign green"></i> */
+.sign { display: inline-block; width: 12px; height: 12px; flex: none; vertical-align: -1px; }
+.sign.green { border-radius: 50%; background: var(--green-run); }
+.sign.blue { background: var(--sky); }
+.sign.black { background: var(--ink); transform: rotate(45deg) scale(.85); }
+
+/* ---------- top bar ---------- */
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; gap: var(--s2); padding: 0 var(--gut); padding-top: env(safe-area-inset-top); color: var(--white); background: rgba(18,59,47,.0); transition: background .25s ease, box-shadow .25s ease; }
+.topbar.solid, body[data-route="book"] .topbar { background: var(--spruce); box-shadow: 0 1px 0 rgba(255,255,255,.08); }
+.brand { font-family: var(--display); font-size: 22px; text-decoration: none; white-space: nowrap; }
+.brand span { color: var(--orange); }
+.navlinks { display: flex; gap: 4px; margin-left: auto; }
+.navlinks a { text-decoration: none; font-weight: 600; font-size: 15px; padding: 8px 14px; border-radius: 999px; white-space: nowrap; }
+.navlinks a:hover { background: rgba(255,255,255,.12); }
+.navlinks a[aria-current="page"] { background: var(--white); color: var(--spruce); }
+.music-btn { display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; padding: 8px 14px; border-radius: 999px; font-weight: 600; font-size: 14px; background: var(--poppy); color: var(--white); white-space: nowrap; }
+.music-btn:hover { filter: brightness(1.08); }
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.eq i { width: 3px; height: 4px; background: currentColor; border-radius: 1px; }
+.music-btn[aria-pressed="true"] .eq i { animation: eq 0.9s ease-in-out infinite; }
+.music-btn[aria-pressed="true"] .eq i:nth-child(2) { animation-delay: -.3s; }
+.music-btn[aria-pressed="true"] .eq i:nth-child(3) { animation-delay: -.6s; }
+@keyframes eq { 0%, 100% { height: 4px; } 50% { height: 14px; } }
+
+@media (max-width: 640px) {
+  :root { --nav-h: 56px; }
+  .brand { font-size: 18px; }
+  .navlinks { gap: 0; }
+  .navlinks a { padding: 7px 9px; font-size: 14px; }
+  .music-label { display: none; }
+  .music-btn { padding: 9px 11px; }
+}
+/* phones: brand + 2 links + music must fit in 375px with 44px tap targets */
+@media (max-width: 440px) {
+  .topbar { gap: 6px; padding-left: 12px; padding-right: 12px; }
+  .brand { font-size: 16px; }
+  .navlinks a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; font-size: 13px; }
+  .music-btn { justify-content: center; min-width: 44px; min-height: 44px; padding: 0 12px; }
+}
+@media (max-width: 380px) { .brand span { display: none; } }
+@media (max-width: 350px) {
+  .topbar { gap: 4px; padding-left: 8px; padding-right: 8px; }
+  .brand { font-size: 15px; }
+  .navlinks a { padding: 0 6px; font-size: 12px; }
+  .music-btn { padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .music-btn[aria-pressed="true"] .eq i { animation: none; height: 10px; }
+}
+
+/* music - autoplay-blocked hint bubble (created by js/music.js) */
+.music-hint { position: fixed; z-index: 1001; top: calc(var(--nav-h) + env(safe-area-inset-top) + 6px); right: var(--gut); max-width: calc(100vw - 2 * var(--gut)); display: inline-flex; align-items: center; gap: 6px; padding: 8px 6px 8px 14px; border-radius: 14px; background: var(--white); color: var(--spruce); border: 2px solid var(--spruce); box-shadow: 0 6px 18px rgba(18,59,47,.25); font: 600 14px/1.25 var(--sans); animation: music-hint-in .35s ease-out both; }
+.music-hint::before { content: ""; position: absolute; top: -8px; right: 22px; width: 12px; height: 12px; background: var(--white); border-left: 2px solid var(--spruce); border-top: 2px solid var(--spruce); transform: rotate(45deg); }
+.music-hint-text::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--poppy); vertical-align: 1px; }
+.music-hint-x { flex: none; width: 26px; height: 26px; border: 0; border-radius: 50%; background: transparent; color: var(--spruce); font: 700 14px/1 var(--sans); cursor: pointer; }
+.music-hint-x:hover, .music-hint-x:focus-visible { background: var(--snow); }
+.music-hint-x:focus-visible { outline: 2px solid var(--poppy); outline-offset: 1px; }
+@keyframes music-hint-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 640px) { .music-hint { font-size: 13px; } .music-hint::before { right: 14px; } }
+@media (prefers-reduced-motion: reduce) { .music-hint { animation: none; } }
