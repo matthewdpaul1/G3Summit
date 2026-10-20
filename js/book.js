@@ -82,7 +82,7 @@
 
   /* ---------- state ---------- */
   var KEY = "g3book.slip.v1";
-  var state = { picks: [], stake: 10, parlay: true, placedAt: null };
+  var state = { picks: [], stake: 10, parlay: true, placedAt: null, name: "" };
   try {
     var saved = JSON.parse(localStorage.getItem(KEY) || "null");
     if (saved && Array.isArray(saved.picks)) {
@@ -90,6 +90,7 @@
       if (typeof saved.stake === "number" && saved.stake >= 0) state.stake = saved.stake;
       if (typeof saved.parlay === "boolean") state.parlay = saved.parlay;
       state.placedAt = saved.placedAt || null;
+      if (typeof saved.name === "string") state.name = saved.name.slice(0, 60);
     }
   } catch (e) { /* private mode or bad JSON: start clean */ }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
@@ -198,6 +199,8 @@
             '<div class="bk-panel-head"><h2 class="bk-panel-title">Bet slip</h2>' +
               '<button type="button" class="bk-clear">Clear</button>' +
               '<button type="button" class="bk-close" aria-label="Close bet slip"><span aria-hidden="true">&times;</span></button></div>' +
+            '<label class="bk-stake bk-bettor"><span>Your name</span>' +
+              '<input type="text" autocomplete="given-name" maxlength="60" placeholder="Name" value="' + esc(state.name) + '"></label>' +
             '<label class="bk-stake"><span>Stake per bet <em>in Poppy Bucks</em></span>' +
               '<input type="number" inputmode="decimal" min="0" step="1" value="' + state.stake + '"></label>' +
             '<ul class="bk-picks" aria-live="polite"></ul>' +
@@ -237,6 +240,35 @@
   var placedEl = root.querySelector(".bk-placed");
   var toastEl = root.querySelector(".bk-toast");
   var mq = window.matchMedia("(min-width: 960px)");
+
+  var sending = false;
+  var nameInput = root.querySelector(".bk-bettor input");
+  nameInput.addEventListener("input", function () { state.name = nameInput.value.trim(); nameInput.removeAttribute("aria-invalid"); save(); });
+
+  /* email the ticket via FormSubmit (same inbox as the firstdate form) */
+  function sendTicket() {
+    var s = stake(), n = state.picks.length, lines = [];
+    state.picks.forEach(function (p) {
+      lines.push(p.label + " (" + p.market + ") " + fmtOdds(p.odds) + " - risk " + fmtMoney(s) + " to win " + fmtMoney(toWin(s, p.odds)));
+    });
+    var body = { _subject: "G3 Sportsbook: " + state.name + " placed " + n + (n === 1 ? " bet" : " bets"), _template: "table", _captcha: "false", Bettor: state.name };
+    lines.forEach(function (l, i) { body["Pick " + (i + 1)] = l; });
+    if (n >= 2 && state.parlay) {
+      var d = parlayDecimal(state.picks.map(function (p) { return p.odds; }));
+      body.Parlay = n + "-leg parlay " + fmtOdds(decToAmerican(d)) + " - risk " + fmtMoney(s) + " to win " + fmtMoney(s * d - s);
+    }
+    body["Stake per bet"] = fmtMoney(s) + " Poppy Bucks";
+    body.Placed = new Date().toLocaleString("en-US", { timeZone: "America/Denver", dateStyle: "medium", timeStyle: "short" }) + " MT";
+    return fetch("https://formsubmit.co/ajax/matthewdpaul1@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (out) {
+        if (!res.ok || String(out.success) !== "true") throw new Error(out.message || "Send failed");
+      });
+    });
+  }
 
   function stake() { return state.stake > 0 ? state.stake : 0; }
 
@@ -285,8 +317,8 @@
     var risk = s * bets;
     var maxWin = state.picks.reduce(function (a, p) { return a + toWin(s, p.odds); }, 0) + (parlayOn ? parlayWin : 0);
     sumEl.innerHTML = n ? '<span>Total risk <strong>' + fmtMoney(risk) + "</strong></span><span>Best case <strong>" + fmtMoney(risk + maxWin) + "</strong></span>" : "";
-    placeBtn.disabled = !n || s <= 0;
-    placeBtn.textContent = n ? (bets === 1 ? "Place bet" : "Place " + bets + " bets") : "Place bet";
+    placeBtn.disabled = sending || !n || s <= 0;
+    placeBtn.textContent = sending ? "Placing..." : n ? (bets === 1 ? "Place bet" : "Place " + bets + " bets") : "Place bet";
     placedEl.textContent = state.placedAt ? "Last ticket placed " + state.placedAt + ". Poppy has it on file." : "";
     root.querySelector(".bk-slipbar-s").textContent = n ? "To win up to " + fmtMoney(maxWin) + " PB" : "Tap a price to add a pick";
     root.querySelector(".bk-clear").hidden = !n;
@@ -345,11 +377,18 @@
     } else if (t === bar) setOpen(!slip.classList.contains("is-open"));
     else if (t.classList.contains("bk-close") || t === scrim) setOpen(false, true);
     else if (t.classList.contains("bk-clear")) { state.picks = []; state.placedAt = null; update(); panel.focus(); }
-    else if (t === placeBtn && state.picks.length) {
-      var d = new Date();
-      state.placedAt = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
-      update();
-      toast("Bet placed. Poppy has been notified.");
+    else if (t === placeBtn && state.picks.length && !sending) {
+      if (!state.name) { nameInput.setAttribute("aria-invalid", "true"); nameInput.focus(); toast("Add your name so the book knows who to pay."); return; }
+      sending = true; update();
+      sendTicket().then(function () {
+        sending = false;
+        state.placedAt = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+        update();
+        toast("Bet placed. Poppy has been notified.");
+      }, function () {
+        sending = false; update();
+        toast("That bet didn't go through. Check your connection and try again.");
+      });
     }
   });
   root.addEventListener("change", function (e) {

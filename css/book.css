@@ -102,6 +102,8 @@
 #view-book .bk-stake { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px dashed var(--line); font-weight: 700; font-size: 15px; }
 #view-book .bk-stake em { display: block; font-style: normal; font-weight: 500; color: var(--muted); font-size: 13px; }
 #view-book .bk-stake input { width: 96px; min-height: 44px; padding: 0 12px; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--white); font: inherit; font-weight: 800; font-size: 19px; text-align: right; font-variant-numeric: tabular-nums; font-variation-settings: "wdth" 75; color: var(--ink); }
+#view-book .bk-bettor input { width: 160px; text-align: left; font-size: 17px; font-variation-settings: normal; font-weight: 600; }
+#view-book .bk-bettor input[aria-invalid="true"] { border-color: var(--poppy); box-shadow: 0 0 0 2px var(--poppy); }
 #view-book .bk-stake input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 #view-book .bk-picks { list-style: none; margin: 0; padding: 0; }
 #view-book .bk-empty { padding: 16px 0; color: var(--muted); font-size: 15px; }
