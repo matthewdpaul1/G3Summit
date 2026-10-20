@@ -205,3 +205,11 @@ html.h-lb-lock, html.h-lb-lock body { overflow: hidden; }
 #view-home .h-bet-cta { display: flex; align-items: center; justify-content: center; min-height: 52px; margin-top: 12px; border-radius: 3px; background: var(--orange); color: var(--white); font-family: var(--display); font-size: 22px; text-decoration: none; box-shadow: 0 4px 0 #B9520F; }
 #view-home .h-bet-cta:hover { filter: brightness(1.06); }
 #view-home .h-bet-cta:active { transform: translateY(2px); box-shadow: 0 2px 0 #B9520F; }
+
+/* phones/tablets: video sits below the ticket instead of behind it, so Poppy is never covered */
+@media (max-width: 1023.98px) {
+  #view-home .h-hero { min-height: 0; padding-bottom: 0; }
+  #view-home .h-hero-inner { order: 1; }
+  #view-home .h-hero-video { order: 2; position: relative; inset: auto; z-index: 0; width: 100%; height: auto; aspect-ratio: 4 / 5; margin-top: var(--s4); object-position: 50% 62%; }
+  #view-home .h-hero-scrim { display: none; }
+}
