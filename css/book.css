@@ -108,9 +108,10 @@
 #view-book .bk-sum { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; font-size: 13px; color: var(--muted); }
 #view-book .bk-sum:empty { display: none; }
 #view-book .bk-sum strong { color: var(--ink); font-size: 15px; font-weight: 700; }
-#view-book .bk-place { width: 100%; min-height: 48px; margin-top: 12px; border: 0; border-radius: 8px; background: var(--spruce); color: var(--white); font-weight: 700; font-size: 16px; cursor: pointer; }
-#view-book .bk-place:hover:not(:disabled) { background: var(--spruce-2); }
-#view-book .bk-place:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; }
+#view-book .bk-place { width: 100%; min-height: 56px; margin-top: 12px; border: 0; border-radius: 10px; background: var(--orange); color: var(--white); font-weight: 800; font-size: 18px; cursor: pointer; box-shadow: 0 4px 0 #B9520F; }
+#view-book .bk-place:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 #B9520F; }
+#view-book .bk-place:hover:not(:disabled) { filter: brightness(1.06); }
+#view-book .bk-place:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; box-shadow: none; }
 #view-book .bk-placed { font-size: 12px; color: var(--muted); margin-top: 8px; }
 #view-book .bk-placed:empty { display: none; }
 
@@ -126,10 +127,20 @@
   #view-book .bk-slipbar-t { font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; }
   #view-book .bk-count { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px; background: var(--spruce); color: var(--white); font-size: 13px; font-variant-numeric: tabular-nums; }
   #view-book .bk-slipbar-s { font-size: 13px; color: var(--muted); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  #view-book .bk-chev { width: 9px; height: 9px; border-left: 2px solid var(--ink); border-top: 2px solid var(--ink); transform: rotate(45deg) translate(2px, 2px); transition: transform .2s ease; justify-self: end; }
+  #view-book .bk-chev { width: 9px; height: 9px; border-left: 2px solid currentColor; border-top: 2px solid currentColor; transform: rotate(45deg) translate(2px, 2px); transition: transform .2s ease; justify-self: end; }
   #view-book .bk-slip.is-open .bk-chev { transform: rotate(225deg) translate(2px, 2px); }
   #view-book .bk-panel { display: none; position: absolute; left: 0; right: 0; bottom: 100%; max-height: calc(100vh - var(--nav-h) - 96px); max-height: calc(100dvh - var(--nav-h) - 96px); overflow-y: auto; overscroll-behavior: contain; border-radius: 16px 16px 0 0; padding: 4px var(--gut) 16px; }
   #view-book .bk-slip.is-open .bk-panel { display: block; animation: bk-up .2s ease-out; }
+  /* phones: Place bet always visible at the bottom of the open sheet */
+  #view-book .bk-place { position: sticky; bottom: 0; z-index: 2; margin-top: 16px; }
+  #view-book .bk-panel { padding-bottom: 12px; }
+  /* bar turns orange once there's something to place */
+  #view-book .bk-slip.has-picks .bk-slipbar { background: var(--orange); color: var(--white); border-top-color: var(--orange); }
+  #view-book .bk-slip.has-picks .bk-slipbar-s { color: var(--white); font-weight: 800; font-size: 15px; }
+  #view-book .bk-slip.has-picks .bk-count { background: var(--white); color: var(--orange); }
+  #view-book .bk-slip.has-picks.is-open .bk-slipbar { background: var(--white); color: var(--ink); border-top-color: var(--line); }
+  #view-book .bk-slip.has-picks.is-open .bk-slipbar-s { color: var(--muted); font-weight: 400; font-size: 13px; }
+  #view-book .bk-slip.has-picks.is-open .bk-count { background: var(--spruce); color: var(--white); }
   #view-book .bk-scrim { position: fixed; inset: 0; z-index: 1100; background: rgba(20, 33, 28, .45); }
   html.bk-lock, html.bk-lock body { overflow: hidden; }
 }
@@ -164,3 +175,8 @@
   #view-book .bk-odds, #view-book .bk-toast, #view-book .bk-chev { transition: none; }
   #view-book .bk-slip.is-open .bk-panel { animation: none; }
 }
+/* yes/no table: name + two price columns at every width */
+#view-book .bk-yn .bk-ou-head, #view-book .bk-yn .bk-row-ou { grid-template-columns: minmax(0, 1fr) 84px 84px; }
+#view-book .bk-yn .bk-row-ou .bk-who { grid-column: auto; }
+#view-book .bk-yn .bk-ou-head .bk-ou-mk { display: block; }
+#view-book .bk-yn .bk-ou-head span:first-of-type + span { text-align: center; }

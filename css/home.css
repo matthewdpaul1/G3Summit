@@ -101,7 +101,13 @@
 #view-home .h-tape-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px var(--s3); flex-wrap: wrap; }
 #view-home .h-tape-head p { font-size: var(--t-base); font-weight: 600; color: var(--muted); }
 /* video full width, then three photos; column widths follow their crops (4:3, 3:4, 3:4) so the row is one height */
-#view-home .h-tape-grid { margin-top: var(--s3); display: grid; grid-template-columns: 16fr 9fr 9fr; gap: var(--s2); }
+#view-home .h-tape-grid { margin-top: var(--s3); display: grid; grid-template-columns: repeat(34, minmax(0, 1fr)); gap: var(--s2); }
+/* rows of equal height: 4:3 + 3:4 + 3:4 = 16 + 9 + 9 columns; two 4:3 = 17 + 17; two 3:4 = 17 + 17 */
+#view-home .h-shot-a { grid-column: span 16; }
+#view-home .h-shot-b, #view-home .h-shot-d { grid-column: span 9; }
+#view-home .h-shot-e, #view-home .h-shot-f, #view-home .h-shot-g, #view-home .h-shot-h { grid-column: span 17; }
+#view-home .h-shot-e .h-photo, #view-home .h-shot-f .h-photo { aspect-ratio: 4 / 3; }
+#view-home .h-shot-g .h-photo, #view-home .h-shot-h .h-photo { aspect-ratio: 3 / 4; }
 #view-home .h-shot { margin: 0; min-width: 0; }
 #view-home .h-photo { display: block; width: 100%; padding: 0; border: 0; background: var(--line); cursor: zoom-in; overflow: hidden; border-radius: 3px; }
 #view-home .h-photo img, #view-home .h-shot video { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
@@ -182,7 +188,8 @@ html.h-lb-lock, html.h-lb-lock body { overflow: hidden; }
   #view-home .h-cd-l { font-size: 12px; }
   #view-home .h-roster, #view-home .h-tape, #view-home .h-maps { padding: var(--s6) 0; }
   #view-home .h-tape-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s1); }
-  #view-home .h-shot-a { grid-column: 1 / -1; }
+  #view-home .h-shot-a, #view-home .h-shot-e, #view-home .h-shot-f { grid-column: 1 / -1; }
+  #view-home .h-shot-b, #view-home .h-shot-d, #view-home .h-shot-g, #view-home .h-shot-h { grid-column: span 1; }
   #view-home .h-poppy { padding: var(--s3) var(--s3) var(--s2); }
   #view-home .h-stats b { font-size: 40px; }
   #view-home .h-stats span, #view-home .h-poppy-line { font-size: var(--t-base); }

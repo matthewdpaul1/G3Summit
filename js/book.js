@@ -24,11 +24,11 @@
   /* ---------- markets ---------- */
   var MARKETS = [
     {
-      id: "show", title: "Will they show?", nav: "Attendance", type: "list",
+      id: "show", title: "Will they show?", nav: "Attendance", type: "yesno",
       note: "Settles in the lift line.",
       rows: [
-        { id: "daniel", group: "show-daniel", name: "Daniel shows up", joke: "", odds: 300, slip: "Daniel shows up" },
-        { id: "caroline", group: "show-caroline", name: "Caroline shows up", joke: "", odds: 150, slip: "Caroline shows up" }
+        { id: "daniel", name: "Daniel", yes: 300, no: -340 },
+        { id: "caroline", name: "Caroline", yes: 150, no: -180 }
       ]
     },
     {
@@ -121,6 +121,21 @@
     return h + "</div>";
   }
 
+  function renderYN(m) {
+    var h = '<div class="bk-rows bk-ou bk-yn" role="table" aria-label="' + esc(m.title) + '">' +
+      '<div class="bk-ou-head" role="row"><span class="bk-ou-mk" role="columnheader">Shows up</span>' +
+      '<span role="columnheader">Yes</span><span role="columnheader">No</span></div>';
+    m.rows.forEach(function (r) {
+      h += '<div class="bk-row bk-row-ou" role="row"><div class="bk-who" role="rowheader"><span class="bk-name">' + esc(r.name) + "</span></div>";
+      [["Yes", r.yes, " shows up"], ["No", r.no, " no-show"]].forEach(function (o) {
+        h += '<span class="bk-cell" role="cell">' + oddsBtn({ group: "show-" + r.id, sel: "show-" + r.id + "-" + o[0].toLowerCase(), odds: o[1], cls: "bk-odds-ou",
+          slip: r.name + o[2], market: m.title, aria: r.name + " " + o[0] }) + "</span>";
+      });
+      h += "</div>";
+    });
+    return h + "</div>";
+  }
+
   function renderOU(m) {
     var h = '<div class="bk-rows bk-ou" role="table" aria-label="' + esc(m.title) + '">' +
       '<div class="bk-ou-head" role="row"><span class="bk-ou-mk" role="columnheader">Market</span>' +
@@ -156,7 +171,7 @@
     if (!root) return null;
     var nav = MARKETS.map(function (m) { return '<button type="button" class="bk-chip" data-jump="bk-' + m.id + '">' + esc(m.nav) + "</button>"; }).join("");
     var markets = MARKETS.map(function (m) {
-      var body = m.type === "ou" ? renderOU(m) : m.type === "ladder" ? renderLadder(m) : renderList(m);
+      var body = m.type === "ou" ? renderOU(m) : m.type === "yesno" ? renderYN(m) : m.type === "ladder" ? renderLadder(m) : renderList(m);
       return '<section class="bk-market" id="bk-' + m.id + '" aria-labelledby="bk-' + m.id + '-h">' +
         '<header class="bk-mhead"><h2 id="bk-' + m.id + '-h">' + esc(m.title) + "</h2>" +
         (m.note ? '<p class="bk-note">' + esc(m.note) + "</p>" : "") + "</header>" + body + "</section>";
@@ -305,7 +320,8 @@
     placeBtn.disabled = sending || !n || s <= 0 || !!state.placedAt;
     placeBtn.textContent = sending ? "Placing..." : state.placedAt && n ? "Bet placed" : n ? (bets === 1 ? "Place bet" : "Place " + bets + " bets") : "Place bet";
     placedEl.textContent = state.placedAt ? "Placed " + state.placedAt : "";
-    root.querySelector(".bk-slipbar-s").textContent = n ? "To win up to " + fmtMoney(maxWin) + " PB" : "Tap a price to add a pick";
+    root.querySelector(".bk-slipbar-s").textContent = n ? "Place bet - to win " + fmtMoney(maxWin) + " PB" : "Tap a price to add a pick";
+    slip.classList.toggle("has-picks", n > 0);
     root.querySelector(".bk-clear").hidden = !n;
     if (refocus === "parlay") { var cb = parlayEl.querySelector("input"); (cb || panel).focus({ preventScroll: true }); }
     else if (typeof refocus === "number" && refocus > -1) {
