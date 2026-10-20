@@ -4,8 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>G3 Summit 2.0 - The 2nd Annual G3 Summit, Vail 2027</title>
-<meta name="description" content="Poppy and the grandkids are back in Vail for Presidents' Day weekend. Countdown, trail maps, last year's tape and the G3 Sportsbook.">
+<meta name="description" content="Poppy, 86, and the grandkids are back in Vail. Super Bowl + Valentine's Day weekend. Countdown, trail maps and the G3 Sportsbook.">
 <meta name="theme-color" content="#123B2F">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matthewdpaul1.github.io/G3Summit/">
+<meta property="og:title" content="G3 Summit 2.0 - Vail, Feb 12-15, 2027">
+<meta property="og:description" content="Poppy, 86, and the grandkids are back in Vail. Super Bowl + Valentine's Day weekend. Countdown, trail maps and the G3 Sportsbook.">
+<meta property="og:image" content="https://matthewdpaul1.github.io/G3Summit/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Poppy and the grandkids in a Vail gondola">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="G3 Summit 2.0 - Vail, Feb 12-15, 2027">
+<meta name="twitter:image" content="https://matthewdpaul1.github.io/G3Summit/img/og-cover.jpg">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,12 +33,8 @@
   <a class="brand" href="#/">G3 Summit <span>2.0</span></a>
   <div class="navlinks">
     <a href="#/" data-route="home">The Summit</a>
-    <a href="#/book" data-route="book">Sportsbook</a>
+    <a class="nav-book" href="#/book" data-route="book">Sportsbook</a>
   </div>
-  <button class="music-btn" id="music-btn" type="button" aria-pressed="false" aria-label="Turn music on">
-    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="music-label" id="music-label">Music off</span>
-  </button>
 </nav>
 
 <div id="main">
@@ -62,6 +69,7 @@
                 <p class="h-cd-label" id="h-cd-label">First chair in</p>
                 <div class="h-cd-row" id="h-cd" role="timer" aria-labelledby="h-cd-label"></div>
               </div>
+              <a class="h-bet-cta" href="#/book">Place your bets</a>
             </div>
           </article>
         </div>
@@ -170,6 +178,11 @@
   <div class="view" id="view-book" data-view="book" tabindex="-1" hidden>
   </div>
 </div>
+
+<button class="music-btn" id="music-btn" type="button" aria-pressed="false" aria-label="Turn music on">
+  <span class="music-disc" aria-hidden="true"><span class="eq"><i></i><i></i><i></i><i></i></span></span>
+  <span class="music-text"><span class="music-song">If I Die Young</span><span class="music-label" id="music-label">Music off</span></span>
+</button>
 
 <audio id="bg-music" src="audio/if-i-die-young.mp3" preload="auto" loop></audio>
 

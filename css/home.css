@@ -193,3 +193,8 @@ html.h-lb-lock, html.h-lb-lock body { overflow: hidden; }
   #view-home .h-photo:hover img { transform: none; }
   #view-home .h-odds:hover { transform: none; }
 }
+
+/* ticket CTA to the sportsbook */
+#view-home .h-bet-cta { display: flex; align-items: center; justify-content: center; min-height: 52px; margin-top: 12px; border-radius: 3px; background: var(--orange); color: var(--white); font-family: var(--display); font-size: 22px; text-decoration: none; box-shadow: 0 4px 0 #B9520F; }
+#view-home .h-bet-cta:hover { filter: brightness(1.06); }
+#view-home .h-bet-cta:active { transform: translateY(2px); box-shadow: 0 2px 0 #B9520F; }
