@@ -58,7 +58,6 @@
     },
     {
       id: "ou", title: "Over/unders", nav: "Over/unders", type: "ou",
-      note: "Both sides -110.",
       rows: [
         { id: "vert", name: "Total vertical feet skied", sub: "2 days, per person", line: 30000, unit: "vertical ft", joke: "" },
         { id: "lostboy", name: "Lost Boy laps", line: 7.5, unit: "Lost Boy laps", joke: "" },
@@ -114,11 +113,6 @@
         oddsBtn({ group: r.group, sel: m.id + "-" + r.id, odds: r.odds, slip: r.slip || r.name, market: m.title, aria: r.name + (m.slipSuffix || ""), imp: m.total }) +
         "</div>";
     });
-    if (m.total) {
-      var sum = m.rows.reduce(function (a, r) { return a + implied(r.odds); }, 0);
-      h += '<div class="bk-total"><span>Total implied probability: <strong>' + fmtPct(sum) + "</strong></span>" +
-        '<span class="bk-total-note">No vig.</span></div>';
-    }
     return h + "</div>";
   }
 
