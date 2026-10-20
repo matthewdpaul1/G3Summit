@@ -37,5 +37,7 @@
   function onScroll() { bar.classList.toggle("solid", window.scrollY > 40); }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+  /* every fresh load opens on The Summit, even from a copied #/book link */
+  if (location.hash && location.hash !== "#/") history.replaceState(null, "", location.pathname + location.search);
   go();
 })();
