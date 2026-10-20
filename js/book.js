@@ -16,8 +16,6 @@
   function fmtOdds(o) { return o > 0 ? "+" + o : String(o); }
   function fmtPct(p) { return (p * 100).toFixed(1) + "%"; }
   function fmtMoney(n) { return (Math.round(n * 100) / 100).toFixed(2); }
-  function tier(odds) { var p = implied(odds); return p >= 0.5 ? "green" : p >= 0.2 ? "blue" : "black"; }
-  var TIER_NAME = { green: "Chalk", blue: "Live dog", black: "Longshot" };
 
   var math = { implied: implied, toWin: toWin, decimal: decimal, decToAmerican: decToAmerican, parlayDecimal: parlayDecimal, fmtPct: fmtPct };
   if (typeof module !== "undefined" && module.exports) module.exports = math;
@@ -27,52 +25,52 @@
   var MARKETS = [
     {
       id: "show", title: "Will they show?", nav: "Attendance", type: "list",
-      note: "Settles when they are standing in the lift line. A text saying 'omw' is not standing in the lift line.",
+      note: "Settles in the lift line.",
       rows: [
-        { id: "daniel", group: "show-daniel", name: "Daniel shows up", joke: "Flight booked: unconfirmed. Seat preference: also unconfirmed.", odds: 300, slip: "Daniel shows up" },
-        { id: "caroline", group: "show-caroline", name: "Caroline shows up", joke: "Has said 'maybe' since October. The book respects the consistency.", odds: 150, slip: "Caroline shows up" }
+        { id: "daniel", group: "show-daniel", name: "Daniel shows up", joke: "", odds: 300, slip: "Daniel shows up" },
+        { id: "caroline", group: "show-caroline", name: "Caroline shows up", joke: "", odds: 150, slip: "Caroline shows up" }
       ]
     },
     {
       id: "anytime", title: "Anytime wipeout", nav: "Anytime wipeout", type: "list",
-      note: "Any fall counts if a ski, a pole or an ego ends up more than five feet away.",
+      note: "Any fall counts.",
       rows: [
-        { id: "spencer", group: "any-spencer", name: "Spencer", joke: "Skis like he is late for something. Usually the ground.", odds: -200 },
-        { id: "matthew", group: "any-matthew", name: "Matthew", joke: "Even money. Strong opinions on snow conditions, weaker ones on stopping.", odds: -100 },
-        { id: "william", group: "any-william", name: "William", joke: "Quietly fast. Quietly falls. The book hears about it at dinner.", odds: 150 },
-        { id: "jonathan", group: "any-jonathan", name: "Jonathan", joke: "Hard to fall when you are singing the whole way down. Not impossible.", odds: 200 },
-        { id: "poppy", group: "any-poppy", name: "Poppy", joke: "Has stayed upright since the Truman administration. The book is scared of him.", odds: 500 }
+        { id: "spencer", group: "any-spencer", name: "Spencer", joke: "", odds: -200 },
+        { id: "matthew", group: "any-matthew", name: "Matthew", joke: "", odds: -100 },
+        { id: "william", group: "any-william", name: "William", joke: "", odds: 150 },
+        { id: "jonathan", group: "any-jonathan", name: "Jonathan", joke: "", odds: 200 },
+        { id: "poppy", group: "any-poppy", name: "Poppy", joke: "", odds: 500 }
       ],
       slipSuffix: " - anytime wipeout"
     },
     {
       id: "first", title: "First wipeout of the weekend", nav: "First wipeout", type: "list", total: true,
-      note: "One winner, Friday first chair onward. The parking lot does not count. Neither does the Red Lion.",
+      note: "One winner.",
       rows: [
-        { id: "spencer", group: "first", name: "Spencer", joke: "The favorite. Starts every morning at full send.", odds: 200 },
-        { id: "matthew", group: "first", name: "Matthew", joke: "Tends to go down while explaining the plan.", odds: 300 },
-        { id: "william", group: "first", name: "William", joke: "Needs one warm-up fall to get it out of his system.", odds: 400 },
-        { id: "jonathan", group: "first", name: "Jonathan", joke: "Mid-chorus is the danger zone.", odds: 500 },
-        { id: "poppy", group: "first", name: "Poppy", joke: "We checked twice. The 86-year-old is the longshot.", odds: 1900 }
+        { id: "spencer", group: "first", name: "Spencer", joke: "", odds: 200 },
+        { id: "matthew", group: "first", name: "Matthew", joke: "", odds: 300 },
+        { id: "william", group: "first", name: "William", joke: "", odds: 400 },
+        { id: "jonathan", group: "first", name: "Jonathan", joke: "", odds: 500 },
+        { id: "poppy", group: "first", name: "Poppy", joke: "", odds: 1900 }
       ],
       slipSuffix: " - first wipeout"
     },
     {
       id: "ou", title: "Over/unders", nav: "Over/unders", type: "ou",
-      note: "Both sides at -110. The book takes a little off the top. Even family has overhead.",
+      note: "Both sides -110.",
       rows: [
-        { id: "vert", name: "Total vertical feet skied", sub: "2 days, per person", line: 30000, unit: "vertical ft", joke: "Settled by whoever remembered to start their app." },
-        { id: "lostboy", name: "Lost Boy laps", line: 7.5, unit: "Lost Boy laps", joke: "The crew's home run. If you've done one Lost Boy lap, you've done 7.5." },
-        { id: "avanti", name: "Avanti chairlift rides", line: 10.5, unit: "Avanti rides", joke: "We ride Avanti so much it should charge rent. The singles line is a lifestyle." },
-        { id: "andrew", name: "Andrew ski runs", line: 0.5, unit: "Andrew runs", joke: "Opened at 1.5 and got bet down. A run to the lodge counts." },
-        { id: "beers", name: "Beers consumed at the Red Lion", line: 30.5, unit: "Red Lion beers", joke: "Group total. Pitchers are scored at the bartender's discretion." },
-        { id: "wings", name: "Wings consumed over the weekend", line: 60.5, unit: "wings", joke: "Group total. Bones are counted by the judges. Celery is not a wing." }
+        { id: "vert", name: "Total vertical feet skied", sub: "2 days, per person", line: 30000, unit: "vertical ft", joke: "" },
+        { id: "lostboy", name: "Lost Boy laps", line: 7.5, unit: "Lost Boy laps", joke: "" },
+        { id: "avanti", name: "Avanti chairlift rides", line: 10.5, unit: "Avanti rides", joke: "" },
+        { id: "andrew", name: "Andrew ski runs", line: 0.5, unit: "Andrew runs", joke: "" },
+        { id: "beers", name: "Beers consumed at the Red Lion", line: 30.5, unit: "Red Lion beers", joke: "" },
+        { id: "wings", name: "Wings consumed over the weekend", line: 60.5, unit: "wings", joke: "" }
       ],
       price: -110
     },
     {
       id: "karaoke", title: "Jonathan Taylor Swift karaoke in the lift line", nav: "Karaoke", type: "ladder",
-      note: "Shake It Off is a lock. All Too Well (10 Minute Version) counts as 3. One rung per slip.",
+      note: "Songs sung. Pick one.",
       group: "karaoke",
       rungs: [
         { n: 1, odds: -500 }, { n: 2, odds: -300 }, { n: 3, odds: -100 }, { n: 4, odds: 300 }, { n: 5, odds: 500 }
@@ -97,7 +95,6 @@
 
   /* ---------- helpers ---------- */
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function sign(odds) { var t = tier(odds); return '<i class="sign ' + t + '" aria-hidden="true"></i><span class="bk-sr">' + TIER_NAME[t] + ", </span>"; }
   function oddsBtn(o) {
     var label = o.aria + ", " + fmtOdds(o.odds) + ", implied probability " + fmtPct(implied(o.odds));
     return '<button type="button" class="bk-odds' + (o.cls ? " " + o.cls : "") + '" aria-pressed="false"' +
@@ -105,37 +102,40 @@
       ' data-label="' + esc(o.slip) + '" data-market="' + esc(o.market) + '" aria-label="' + esc(label) + '">' +
       (o.top ? '<span class="bk-top">' + o.top + "</span>" : "") +
       '<span class="bk-price">' + fmtOdds(o.odds) + "</span>" +
-      '<span class="bk-imp">' + fmtPct(implied(o.odds)) + "</span></button>";
+      (o.imp ? '<span class="bk-imp">' + fmtPct(implied(o.odds)) + "</span>" : "") + "</button>";
   }
 
   function renderList(m) {
     var h = '<div class="bk-rows">';
     m.rows.forEach(function (r) {
-      h += '<div class="bk-row"><div class="bk-who"><span class="bk-name">' + sign(r.odds) + esc(r.name) + "</span>" +
-        '<span class="bk-joke">' + esc(r.joke) + "</span></div>" +
-        oddsBtn({ group: r.group, sel: m.id + "-" + r.id, odds: r.odds, slip: r.slip || r.name, market: m.title, aria: r.name + (m.slipSuffix || "") }) +
+      h += '<div class="bk-row"><div class="bk-who"><span class="bk-name">' + esc(r.name) + "</span>" +
+        (r.joke ? '<span class="bk-joke">' + esc(r.joke) + "</span>" : "") + "</div>" +
+        oddsBtn({ group: r.group, sel: m.id + "-" + r.id, odds: r.odds, slip: r.slip || r.name, market: m.title, aria: r.name + (m.slipSuffix || ""), imp: m.total }) +
         "</div>";
     });
     if (m.total) {
       var sum = m.rows.reduce(function (a, r) { return a + implied(r.odds); }, 0);
       h += '<div class="bk-total"><span>Total implied probability: <strong>' + fmtPct(sum) + "</strong></span>" +
-        '<span class="bk-total-note">No juice on this one. We\'re family.</span></div>';
+        '<span class="bk-total-note">No vig.</span></div>';
     }
     return h + "</div>";
   }
 
   function renderOU(m) {
-    var h = '<div class="bk-rows">';
+    var h = '<div class="bk-rows bk-ou" role="table" aria-label="' + esc(m.title) + '">' +
+      '<div class="bk-ou-head" role="row"><span class="bk-ou-mk" role="columnheader">Market</span>' +
+      '<span role="columnheader">Line</span><span role="columnheader">Over</span><span role="columnheader">Under</span></div>';
     m.rows.forEach(function (r) {
       var line = r.line.toLocaleString("en-US");
-      h += '<div class="bk-row bk-row-ou"><div class="bk-who"><span class="bk-name">' + esc(r.name) +
-        (r.sub ? ' <span class="bk-subname">' + esc(r.sub) + "</span>" : "") + "</span>" +
-        '<span class="bk-joke">' + esc(r.joke) + '</span></div><div class="bk-pair">';
+      h += '<div class="bk-row bk-row-ou" role="row"><div class="bk-who" role="rowheader"><span class="bk-name">' + esc(r.name) + "</span>" +
+        (r.sub ? '<span class="bk-subname">' + esc(r.sub) + "</span>" : "") +
+        (r.joke ? '<span class="bk-joke">' + esc(r.joke) + "</span>" : "") + "</div>" +
+        '<span class="bk-line" role="cell">' + line + "</span>";
       ["Over", "Under"].forEach(function (side) {
-        h += oddsBtn({ group: "ou-" + r.id, sel: "ou-" + r.id + "-" + side.toLowerCase(), odds: m.price, cls: "bk-odds-ou",
-          top: side + " " + line, slip: side + " " + line + " " + r.unit, market: m.title, aria: side + " " + line + " " + r.name });
+        h += '<span class="bk-cell" role="cell">' + oddsBtn({ group: "ou-" + r.id, sel: "ou-" + r.id + "-" + side.toLowerCase(), odds: m.price, cls: "bk-odds-ou",
+          slip: side + " " + line + " " + r.unit, market: m.title, aria: side + " " + line + " " + r.name }) + "</span>";
       });
-      h += "</div></div>";
+      h += "</div>";
     });
     return h + "</div>";
   }
@@ -145,17 +145,11 @@
     m.rungs.forEach(function (r) {
       var songs = r.n + "+";
       h += oddsBtn({ group: m.group, sel: "karaoke-" + r.n, odds: r.odds, cls: "bk-rung",
-        top: sign(r.odds) + songs + " <span class=\"bk-songs\">song" + (r.n > 1 ? "s" : "") + "</span>",
+        top: songs,
         slip: "Jonathan " + songs + " Swift song" + (r.n > 1 ? "s" : ""), market: m.title, aria: "Jonathan " + songs + " Taylor Swift songs" });
     });
     return h + "</div>";
   }
-
-  var MOVES = [
-    "Andrew ski runs 1.5 to 0.5",
-    "Daniel shows up +200 to +300",
-    "Poppy anytime wipeout +400 to +500"
-  ];
 
   function render() {
     var root = document.getElementById("view-book");
@@ -165,29 +159,20 @@
       var body = m.type === "ou" ? renderOU(m) : m.type === "ladder" ? renderLadder(m) : renderList(m);
       return '<section class="bk-market" id="bk-' + m.id + '" aria-labelledby="bk-' + m.id + '-h">' +
         '<header class="bk-mhead"><h2 id="bk-' + m.id + '-h">' + esc(m.title) + "</h2>" +
-        '<p class="bk-note">' + esc(m.note) + "</p></header>" + body + "</section>";
+        (m.note ? '<p class="bk-note">' + esc(m.note) + "</p>" : "") + "</header>" + body + "</section>";
     }).join("");
 
     root.innerHTML =
       '<div class="bk">' +
       '<header class="bk-head"><div class="bk-wrap">' +
-        '<p class="bk-live"><span class="bk-dot" aria-hidden="true"></span>Live from the Red Lion</p>' +
         "<h1>G3 Sportsbook</h1>" +
-        '<p class="bk-dek">Presidents\' Day weekend in Vail, Fri Feb 12 - Mon Feb 15, 2027. Lines set by the grandkids. Moved by Poppy.</p>' +
-        '<div class="bk-meta">' +
-          '<p class="bk-moves"><span class="bk-moves-k">Line moves</span>' + MOVES.map(function (s) { return "<span>" + esc(s) + "</span>"; }).join("") + "</p>" +
-          '<ul class="bk-legend" aria-label="Risk tier legend">' +
-            '<li><i class="sign green" aria-hidden="true"></i>Chalk, 50% or better</li>' +
-            '<li><i class="sign blue" aria-hidden="true"></i>Live dog, 20 to 50%</li>' +
-            '<li><i class="sign black" aria-hidden="true"></i>Longshot, under 20%</li>' +
-          "</ul>" +
-        "</div>" +
+        '<p class="bk-dek">G3 Summit 2.0 - Vail, Feb 12-15, 2027</p>' +
       "</div></header>" +
       '<div class="bk-wrap bk-grid">' +
         '<div class="bk-board">' +
           '<nav class="bk-chips" aria-label="Markets">' + nav + "</nav>" +
           markets +
-          '<p class="bk-fine">Entertainment only. No real money changes hands. Settled in bragging rights. Poppy is the house.</p>' +
+          '<p class="bk-fine">For fun only. No real money.</p>' +
         "</div>" +
         '<div class="bk-scrim" hidden></div>' +
         '<aside class="bk-slip" aria-label="Bet slip">' +
@@ -199,9 +184,9 @@
             '<div class="bk-panel-head"><h2 class="bk-panel-title">Bet slip</h2>' +
               '<button type="button" class="bk-clear">Clear</button>' +
               '<button type="button" class="bk-close" aria-label="Close bet slip"><span aria-hidden="true">&times;</span></button></div>' +
-            '<label class="bk-stake bk-bettor"><span>Your name</span>' +
+            '<label class="bk-field bk-bettor"><span>Your name</span>' +
               '<input type="text" autocomplete="given-name" maxlength="60" placeholder="Name" value="' + esc(state.name) + '"></label>' +
-            '<label class="bk-stake"><span>Stake per bet <em>in Poppy Bucks</em></span>' +
+            '<label class="bk-field bk-amount"><span>Stake <em>Poppy Bucks</em></span>' +
               '<input type="number" inputmode="decimal" min="0" step="1" value="' + state.stake + '"></label>' +
             '<ul class="bk-picks" aria-live="polite"></ul>' +
             '<div class="bk-parlay"></div>' +
@@ -232,7 +217,7 @@
   var bar = root.querySelector(".bk-slipbar");
   var panel = root.querySelector(".bk-panel");
   var scrim = root.querySelector(".bk-scrim");
-  var stakeInput = root.querySelector(".bk-stake input");
+  var stakeInput = root.querySelector(".bk-amount input");
   var picksEl = root.querySelector(".bk-picks");
   var parlayEl = root.querySelector(".bk-parlay");
   var sumEl = root.querySelector(".bk-sum");
@@ -288,7 +273,7 @@
     else if (ae && picksEl.contains(ae) && ae.classList.contains("bk-x")) refocus = Array.prototype.indexOf.call(picksEl.querySelectorAll(".bk-x"), ae);
 
     if (!n) {
-      picksEl.innerHTML = '<li class="bk-empty">Tap any price on the board to add a pick. Nothing on the slip yet, which is also how Poppy likes his lift line.</li>';
+      picksEl.innerHTML = '<li class="bk-empty">Tap a price to add a pick.</li>';
     } else {
       picksEl.innerHTML = state.picks.map(function (p) {
         var w = toWin(s, p.odds);
@@ -317,9 +302,9 @@
     var risk = s * bets;
     var maxWin = state.picks.reduce(function (a, p) { return a + toWin(s, p.odds); }, 0) + (parlayOn ? parlayWin : 0);
     sumEl.innerHTML = n ? '<span>Total risk <strong>' + fmtMoney(risk) + "</strong></span><span>Best case <strong>" + fmtMoney(risk + maxWin) + "</strong></span>" : "";
-    placeBtn.disabled = sending || !n || s <= 0;
-    placeBtn.textContent = sending ? "Placing..." : n ? (bets === 1 ? "Place bet" : "Place " + bets + " bets") : "Place bet";
-    placedEl.textContent = state.placedAt ? "Last ticket placed " + state.placedAt + ". Poppy has it on file." : "";
+    placeBtn.disabled = sending || !n || s <= 0 || !!state.placedAt;
+    placeBtn.textContent = sending ? "Placing..." : state.placedAt && n ? "Bet placed" : n ? (bets === 1 ? "Place bet" : "Place " + bets + " bets") : "Place bet";
+    placedEl.textContent = state.placedAt ? "Placed " + state.placedAt : "";
     root.querySelector(".bk-slipbar-s").textContent = n ? "To win up to " + fmtMoney(maxWin) + " PB" : "Tap a price to add a pick";
     root.querySelector(".bk-clear").hidden = !n;
     if (refocus === "parlay") { var cb = parlayEl.querySelector("input"); (cb || panel).focus({ preventScroll: true }); }
@@ -369,6 +354,7 @@
     if (t.classList.contains("bk-odds")) toggle(t);
     else if (t.classList.contains("bk-x")) {
       state.picks = state.picks.filter(function (p) { return p.sel !== t.dataset.sel; });
+      state.placedAt = null;
       update();
       if (!state.picks.length) (mq.matches ? stakeInput : panel).focus();
     } else if (t.classList.contains("bk-chip")) {
@@ -378,13 +364,13 @@
     else if (t.classList.contains("bk-close") || t === scrim) setOpen(false, true);
     else if (t.classList.contains("bk-clear")) { state.picks = []; state.placedAt = null; update(); panel.focus(); }
     else if (t === placeBtn && state.picks.length && !sending) {
-      if (!state.name) { nameInput.setAttribute("aria-invalid", "true"); nameInput.focus(); toast("Add your name so the book knows who to pay."); return; }
+      if (!state.name) { nameInput.setAttribute("aria-invalid", "true"); nameInput.focus(); toast("Add your name first."); return; }
       sending = true; update();
       sendTicket().then(function () {
         sending = false;
-        state.placedAt = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+        state.placedAt = new Date().toLocaleTimeString("en-US", { timeZone: "America/Denver", hour: "numeric", minute: "2-digit" }) + " MT";
         update();
-        toast("Bet placed. Poppy has been notified.");
+        toast("Bet placed.");
       }, function () {
         sending = false; update();
         toast("That bet didn't go through. Check your connection and try again.");
@@ -392,11 +378,12 @@
     }
   });
   root.addEventListener("change", function (e) {
-    if (e.target.matches(".bk-parlay input")) { state.parlay = e.target.checked; update(); }
+    if (e.target.matches(".bk-parlay input")) { state.parlay = e.target.checked; state.placedAt = null; update(); }
   });
   stakeInput.addEventListener("input", function () {
     var v = parseFloat(stakeInput.value);
     state.stake = isFinite(v) && v >= 0 ? v : 0;
+    state.placedAt = null;
     update();
   });
   stakeInput.addEventListener("blur", function () { stakeInput.value = state.stake; });
