@@ -28,7 +28,8 @@
       note: "Settles in the lift line.",
       rows: [
         { id: "daniel", name: "Daniel", yes: 300, no: -340 },
-        { id: "caroline", name: "Caroline", yes: 150, no: -180 }
+        { id: "caroline", name: "Caroline", yes: 150, no: -180 },
+        { id: "claire", name: "Claire", yes: 1000, no: -1200 }
       ]
     },
     {
