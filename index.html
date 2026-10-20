@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vail - Presidents' Day Weekend 2027</title>
+<meta name="description" content="Countdown, trail maps and the tape from last time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Vail 2027. Cold, high-altitude palette: night-navy hero over the run video, then snow-white
+   paper. Barlow Condensed for trail-sign headlines and numbers, Inter Tight for everything else.
+   One accent (ski-patrol red) used sparingly; trail-difficulty colors only as small markers. */
+:root {
+  --navy: #0B1A2E;
+  --navy-2: #13294A;
+  --ice: #DCE8F4;
+  --snow: #F5F8FB;
+  --ink: #0E1726;
+  --muted: #56657A;
+  --line: #D5DEE8;
+  --red: #D7262E;
+  --green: #1E9E4A;
+  --blue: #1F6FD1;
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --gut: clamp(16px, 4vw, 48px);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--snow); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+h1, h2, h3, p { margin: 0; }
+a { color: inherit; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gut); }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; min-height: min(100svh, 960px); color: #fff; background: var(--navy); overflow: hidden; display: flex; align-items: flex-end; }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,26,46,.35) 0%, rgba(11,26,46,.15) 40%, rgba(11,26,46,.92) 100%); }
+#snow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.hero-inner { position: relative; z-index: 2; width: 100%; padding-bottom: clamp(48px, 10vh, 104px); }
+.eyebrow { font-family: var(--cond); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; font-size: 15px; color: var(--ice); display: flex; align-items: center; gap: 10px; }
+.eyebrow i { width: 28px; height: 2px; background: var(--red); }
+.hero h1 { font-family: var(--cond); font-weight: 800; text-transform: uppercase; font-size: clamp(88px, 17vw, 220px); line-height: .82; letter-spacing: -.01em; margin: 14px 0 10px; }
+.hero .sub { font-size: clamp(17px, 2vw, 21px); color: var(--ice); max-width: 560px; }
+.chips { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); }
+.cd-wrap { margin-top: 30px; display: inline-flex; flex-direction: column; gap: 10px; }
+.cd-label { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ice); }
+.countdown { display: flex; border-radius: 14px; background: rgba(11,26,46,.55); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 4px 6px; }
+.countdown .unit { display: flex; flex-direction: column; padding: 10px 20px 9px; }
+.countdown .unit + .unit { box-shadow: -1px 0 0 rgba(255,255,255,.14); }
+.countdown .n { font-family: var(--cond); font-weight: 700; font-size: 56px; line-height: .95; font-variant-numeric: tabular-nums; }
+.countdown .l { font-size: 12px; color: var(--ice); font-weight: 500; }
+.sound-btn { position: absolute; z-index: 3; right: var(--gut); top: 20px; border: 0; cursor: pointer; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: rgba(255,255,255,.14); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); backdrop-filter: blur(8px); }
+.sound-btn:hover { background: rgba(255,255,255,.24); }
+
+/* ---------- sections ---------- */
+section { padding: clamp(64px, 10vw, 120px) 0; }
+.kicker { font-family: var(--cond); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: 14px; color: var(--red); }
+h2 { font-family: var(--cond); font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 6vw, 72px); line-height: .92; margin: 8px 0 14px; }
+.lede { color: var(--muted); max-width: 620px; font-size: 17px; }
+
+/* the tape: photos + clips */
+.tape { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+.tile { position: relative; border-radius: 12px; overflow: hidden; background: var(--ice); cursor: zoom-in; border: 0; padding: 0; }
+.tile img, .tile video { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.tile:hover img { transform: scale(1.03); }
+.tile .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 14px 12px; color: #fff; font-size: 13px; font-weight: 500; text-align: left; background: linear-gradient(180deg, transparent, rgba(11,26,46,.8)); }
+.t-wide { grid-column: span 8; aspect-ratio: 4 / 3; }
+.t-tall { grid-column: span 4; aspect-ratio: 3 / 4.1; }
+.t-half { grid-column: span 6; aspect-ratio: 16 / 10; }
+.t-clip { cursor: default; }
+.t-clip video { cursor: pointer; }
+.play { position: absolute; top: 12px; right: 12px; font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: rgba(11,26,46,.6); color: #fff; pointer-events: none; }
+
+/* trail maps */
+.maps { background: var(--navy); color: #fff; }
+.maps .lede { color: var(--ice); }
+.tabs { display: inline-flex; margin-top: 32px; padding: 4px; border-radius: 999px; background: var(--navy-2); }
+.tabs button { border: 0; background: none; cursor: pointer; padding: 9px 20px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--ice); }
+.tabs button[aria-selected="true"] { background: #fff; color: var(--navy); }
+.map-frame { margin-top: 18px; border-radius: 14px; overflow: hidden; background: #0F223C; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+.map-frame button { display: block; width: 100%; border: 0; padding: 0; cursor: zoom-in; background: none; }
+.map-frame img { width: 100%; }
+.map-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 14px; font-size: 13px; color: var(--ice); }
+.map-meta a { font-weight: 600; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; background: var(--green); }
+.sq { width: 11px; height: 11px; background: var(--blue); }
+.dia { width: 10px; height: 10px; background: #fff; transform: rotate(45deg); }
+
+/* need-to-know */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 36px; }
+.fact { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.fact .v { font-family: var(--cond); font-weight: 700; font-size: 40px; line-height: 1; }
+.fact .k { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+footer { padding: 36px 0 48px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
+
+/* lightbox: images open at natural size and scroll/pan inside the overlay */
+.lb { position: fixed; inset: 0; z-index: 100; background: rgba(6,12,22,.94); display: none; overflow: auto; }
+.lb.open { display: block; }
+.lb img { max-width: none; margin: auto; }
+.lb.fit { display: none; }
+.lb.open.fit { display: flex; align-items: center; justify-content: center; padding: 24px; }
+.lb.fit img { max-width: 100%; max-height: 100%; }
+.lb-close { position: fixed; top: 16px; right: 16px; z-index: 101; border: 0; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; background: #fff; color: var(--navy); font-size: 22px; line-height: 1; }
+
+@media (max-width: 820px) {
+  .t-wide, .t-tall, .t-half { grid-column: span 12; }
+  .t-tall { aspect-ratio: 4 / 5; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .countdown-wrap, .cd-wrap { display: flex; }
+  .countdown .unit { flex: 1 1 0; padding: 9px 10px 8px; }
+  .countdown .n { font-size: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { #snow { display: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <video id="hero-video" src="video/IMG_5168.mp4" poster="video/IMG_5168.jpg" muted loop playsinline autoplay preload="auto" aria-label="Skiing down the front side"></video>
+  <canvas id="snow" aria-hidden="true"></canvas>
+  <button class="sound-btn" id="sound" type="button">Sound on</button>
+  <div class="hero-inner wrap">
+    <p class="eyebrow"><i></i>Presidents' Day Weekend</p>
+    <h1>Vail '27</h1>
+    <p class="sub">Same gondola, same crew, more vertical. Back to the mountain for the long weekend.</p>
+    <ul class="chips" id="chips"></ul>
+    <div class="cd-wrap">
+      <p class="cd-label" id="cd-label"></p>
+      <div class="countdown" id="countdown" role="timer" aria-live="off"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="tape">
+    <div class="wrap">
+      <p class="kicker">The tape</p>
+      <h2>Last time on the mountain</h2>
+      <p class="lede">Gondola selfies, a lodge lunch and one very serious ski shot. The bar for this year.</p>
+      <div class="tape">
+        <button class="tile t-wide" data-full="img/IMG_1120.jpg"><img src="img/IMG_1120.jpg" alt="Five of us in the gondola, aspens outside" loading="lazy"><span class="cap">Full gondola, aspens outside</span></button>
+        <button class="tile t-tall" data-full="img/IMG_5167.jpg"><img src="img/IMG_5167.jpg" alt="Two of us in the gondola heading up" loading="lazy"><span class="cap">The ride up</span></button>
+        <div class="tile t-half t-clip"><video src="video/IMG_0922.mp4" poster="video/IMG_0922.jpg" playsinline preload="none" controls aria-label="Ski shot at the bar"></video><span class="play">Ski shot</span></div>
+        <button class="tile t-half" data-full="img/IMG_5166.jpg"><img src="img/IMG_5166.jpg" alt="Lunch break in the lodge" loading="lazy" style="object-position: 50% 30%"><span class="cap">Lodge lunch break</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="maps" id="maps">
+    <div class="wrap">
+      <p class="kicker">Trail maps</p>
+      <h2>Know the mountain</h2>
+      <p class="lede">The 2026-27 maps from Vail Resorts. Click a map to open it at full size and pan around.</p>
+      <div class="tabs" role="tablist" aria-label="Trail map">
+        <button role="tab" aria-selected="true" data-map="front-side">Front Side</button>
+        <button role="tab" aria-selected="false" data-map="back-bowls">Back Bowls</button>
+      </div>
+      <div class="map-frame">
+        <button id="map-btn" type="button" aria-label="Open trail map at full size"><img id="map-img" src="maps/front-side-sm.jpg" alt="Vail Front Side trail map"></button>
+      </div>
+      <div class="map-meta">
+        <div class="legend"><span><i class="dot"></i>Easiest</span><span><i class="sq"></i>More difficult</span><span><i class="dia"></i>Most difficult</span></div>
+        <a id="map-link" href="maps/front-side.jpg" target="_blank" rel="noopener">Open full resolution</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="facts">
+    <div class="wrap">
+      <p class="kicker">Need to know</p>
+      <h2>The mountain by numbers</h2>
+      <div class="facts">
+        <div class="fact"><p class="v">5,317</p><p class="k">skiable acres</p></div>
+        <div class="fact"><p class="v">11,570'</p><p class="k">summit elevation</p></div>
+        <div class="fact"><p class="v">3,450'</p><p class="k">vertical drop</p></div>
+        <div class="fact"><p class="v">7</p><p class="k">legendary Back Bowls</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Trail maps courtesy of Vail Resorts. Times shown in Mountain Time.</div></footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Full size image"><img id="lb-img" alt=""></div>
+<button class="lb-close" id="lb-close" type="button" aria-label="Close" hidden>&times;</button>
+
+<script>
+/* ---------- trip config: edit these when plans firm up ---------- */
+var TRIP = {
+  arrive: "2027-02-12",                  // Friday
+  leave: "2027-02-15",                   // Presidents' Day (third Monday of February)
+  firstChair: "2027-02-13T08:30:00-07:00" // Saturday first chair, MST
+};
+
+function h(tag, attrs, kids) {
+  var el = document.createElement(tag);
+  for (var k in attrs || {}) { if (attrs[k] == null) continue; if (k === "text") el.textContent = attrs[k]; else el.setAttribute(k, attrs[k]); }
+  (kids || []).forEach(function (c) { el.appendChild(c); });
+  return el;
+}
+function d(s) { return new Date(s + "T12:00:00"); }
+function fmt(s) { return d(s).toLocaleDateString("en-US", { month: "short", day: "numeric" }); }
+function denverDate(t) { return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Denver" }).format(t); }
+
+/* chips */
+var nDays = Math.round((d(TRIP.leave) - d(TRIP.arrive)) / 864e5) + 1;
+[fmt(TRIP.arrive) + " - " + fmt(TRIP.leave) + ", 2027", nDays + " days", "2 trail maps", "Vail, CO"].forEach(function (t) {
+  document.getElementById("chips").appendChild(h("li", { text: t }));
+});
+
+/* countdown to first chair, ticking every second */
+var cd = document.getElementById("countdown"), label = document.getElementById("cd-label");
+var target = new Date(TRIP.firstChair);
+var units = [["days", 864e5], ["hrs", 36e5], ["min", 6e4], ["sec", 1e3]];
+var cells = units.map(function (u) {
+  var n = h("span", { class: "n" });
+  cd.appendChild(h("span", { class: "unit" }, [n, h("span", { class: "l", text: u[0] })]));
+  return n;
+});
+function tick() {
+  var now = new Date(), left = target - now;
+  if (left > 0) {
+    units.forEach(function (u, i) {
+      var v = Math.floor(left / u[1]); left -= v * u[1];
+      cells[i].textContent = i === 0 ? v.toLocaleString("en-US") : String(v).padStart(2, "0");
+    });
+    label.textContent = "First chair in";
+    return true;
+  }
+  cd.textContent = "";
+  var today = denverDate(now);
+  if (today <= TRIP.leave) {
+    label.textContent = "We're on the mountain";
+    cd.appendChild(h("span", { class: "unit" }, [h("span", { class: "n", text: "Ski" }), h("span", { class: "l", text: "go get first tracks" })]));
+  } else {
+    label.textContent = "That's a wrap. See you next season.";
+    cd.style.display = "none";
+  }
+  return false;
+}
+if (tick()) var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 1000);
+
+/* hero video: muted autoplay, toggle sound */
+var hv = document.getElementById("hero-video"), sb = document.getElementById("sound");
+sb.addEventListener("click", function () {
+  hv.muted = !hv.muted;
+  if (!hv.muted) { hv.currentTime = 0; hv.play(); }
+  sb.textContent = hv.muted ? "Sound on" : "Sound off";
+});
+
+/* trail map tabs */
+var mapImg = document.getElementById("map-img"), mapLink = document.getElementById("map-link");
+var mapNames = { "front-side": "Front Side", "back-bowls": "Back Bowls" };
+document.querySelectorAll(".tabs button").forEach(function (b) {
+  b.addEventListener("click", function () {
+    document.querySelectorAll(".tabs button").forEach(function (o) { o.setAttribute("aria-selected", o === b ? "true" : "false"); });
+    var m = b.dataset.map;
+    mapImg.src = "maps/" + m + "-sm.jpg";
+    mapImg.alt = "Vail " + mapNames[m] + " trail map";
+    mapLink.href = "maps/" + m + ".jpg";
+  });
+});
+
+/* lightbox: trail maps open at natural size (pan by scrolling), photos fit to screen */
+var lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img"), lbClose = document.getElementById("lb-close");
+function openLb(src, fit) {
+  lbImg.src = src;
+  lb.classList.toggle("fit", fit);
+  lb.classList.add("open");
+  lbClose.hidden = false;
+  document.body.style.overflow = "hidden";
+  if (!fit) lbImg.onload = function () { lb.scrollLeft = (lb.scrollWidth - lb.clientWidth) / 2; lb.scrollTop = (lb.scrollHeight - lb.clientHeight) / 3; };
+}
+function closeLb() { lb.classList.remove("open"); lbClose.hidden = true; document.body.style.overflow = ""; lbImg.removeAttribute("src"); }
+document.getElementById("map-btn").addEventListener("click", function () { openLb(mapLink.getAttribute("href"), false); });
+document.querySelectorAll(".tile[data-full]").forEach(function (t) { t.addEventListener("click", function () { openLb(t.dataset.full, true); }); });
+lb.addEventListener("click", function (e) { if (e.target === lb || lb.classList.contains("fit")) closeLb(); });
+lbClose.addEventListener("click", closeLb);
+document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLb(); });
+
+/* light snowfall over the hero */
+(function () {
+  var c = document.getElementById("snow"), x = c.getContext("2d"), flakes = [], W, H;
+  function size() { var r = window.devicePixelRatio || 1; W = c.clientWidth; H = c.clientHeight; c.width = W * r; c.height = H * r; x.setTransform(r, 0, 0, r, 0, 0); }
+  size(); window.addEventListener("resize", size);
+  for (var i = 0; i < 140; i++) flakes.push({ x: Math.random(), y: Math.random(), r: Math.random() * 2.2 + .6, s: Math.random() * .6 + .3, w: Math.random() * 6.28 });
+  (function draw() {
+    x.clearRect(0, 0, W, H); x.fillStyle = "rgba(255,255,255,.85)";
+    flakes.forEach(function (f) {
+      f.y += f.s / H * 1.4 * (1 + f.r); f.w += .01; f.x += Math.sin(f.w) * .0004;
+      if (f.y > 1.02) { f.y = -.02; f.x = Math.random(); }
+      x.beginPath(); x.arc(f.x * W, f.y * H, f.r, 0, 6.28); x.fill();
+    });
+    requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>
